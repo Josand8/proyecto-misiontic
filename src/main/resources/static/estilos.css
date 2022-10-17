@@ -1,0 +1,78 @@
+body {
+    background: #f0f3f5;
+    color: #fff;
+}
+
+header {
+    background: #000;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+}
+
+#botonReportar {
+    background: rgb(98, 90, 151);
+    border-radius: 3px;
+    width: 100%;
+    color: #fff;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    padding: 3px;
+}
+
+#formularioReporte {
+    margin: 10px 10px;
+    padding: 10px 10px;
+}
+
+/* # formRegistroUsuarioRepor {
+    width: 100%;
+} */
+
+#headerModalRegistro, #headerModalInicioSesion, #headerModalReporte {
+    background-color: #4c4181;
+    color: #FFF;
+}
+.button {
+    background-color: #4c4181;
+    color: #FFF;
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+
+/* input, p {
+    color: black;
+    font-size: 1.1rem;
+} */
+
+footer {
+    padding: 20px 0;
+    background: #1e1e1e;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#exampleModalLabel {
+    color: #000;
+}
+
+.modal-body {
+    color: #000;
+}
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: inline-block;
+}

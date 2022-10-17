@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Expires" content="0">
+    <!-- <meta http-equiv="Last-Modified" content="0"> -->
+    <!-- <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"> -->
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <link rel="shortcut icon" href="recursos/favicon.png" type="image/x-icon">
+    <title>App Seguridad Ciudadana</title>
+</head>
+<body>
+    <a href="logueado">
+        <div class="container">
+            <header class="row">
+                <div class="col">
+                        <h1 style="color: white;"> &#x1f5e3;&#xfe0f; App de seguridad ciudadana</h1>
+                        <p  style="color: white;">Mapa colaborativo de reportes de seguridad en tiempo real en Bogotá</p>
+                </div>
+            </header>
+        </div>                    
+    </a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                      <a class="navbar-brand" href="#map">Bienvenid@</a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" id="contactarPorCorreo">Contáctanos</a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="nosotros">Sobre Nosotros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-primary" href="index">CERRAR SESIÓN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="allusers">Todos los Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="allreports">Todos los reportes</a>
+                            </li>
+                        </ul>
+                        <!-- <form class="d-flex">
+                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form> -->
+                      </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+   
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- <div id="map" data-bs-toggle="modal" data-bs-target="#exampleModal4"></div> -->
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- Modal Reporte controlada en mapLogueado.js-->
+                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id="headerModalReporte">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div>
+                            <form th:action="@{/guardarreport}" th:object="${reporte}" method="post" class="d-flex">
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <br>
+                                            <div class="form-group">
+                                                <label style="color: black">Escriba el tipo de delito (Accidente vial, Desastre natural o Robo):</label>
+                                                <input type="text" name="tipo_delito" field="*{tipo_delito}" placeholder="Tipo de delito" class="form-control" required>
+                                            </div> 
+                                            <br>
+                                            <textarea name="des_acontecimiento" field="*{des_acontecimiento}" id="des_acontecimiento" cols="53" rows="5" placeholder="Describe aquí lo sucedido en esta ubicación (opcional)"></textarea>
+                                            <br>
+                                            <div class="form-group">
+                                                <input type="number" name="longitud" field="*{longitud}" placeholder="Longitud" class="form-control" required>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <input type="number" name="latitud" field="*{latitud}" placeholder="Latitud" class="form-control" required>
+                                            </div>
+                                            <!-- <textarea name="des_acontecimiento" field="*{des_acontecimiento}" id="des_acontecimiento" cols="53" rows="5" placeholder="Describe aquí lo sucedido en esta ubicación (opcional)"></textarea> -->
+                                            <br>
+                                            <!-- <p style="color: transparent;">La ubicación elegida tiene las coordenadas: </p> -->
+                                            <!-- <span style="color: black;" id="coordenadasReportadas"></span> -->
+                                            <span style="color: black;" id="Longitud"></span>
+                                            <span style="color: black;" id="Latitud"></span>
+                                            <span style="color: transparent;" id="IDReportado"></span>
+                                            <br>
+                                            <!-- <p style="color: black;">¿Cuándo ocurrió?</p> -->
+                                            <div class="form-group">
+                                                <p style="color: black;">¿Cuándo ocurrió?</p>
+                                                <input type="datetime" name="fecha" field="*{fecha}" id="fechaReporte" placeholder="Fecha" class="form-control" required>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <input type="number" name="usuario_idusuario" field="*{usuario_idusuario}" placeholder="ID usuario" class="form-control" required>
+                                            </div>
+                                            <hr>
+                                            <div class="modal-footer">
+                                                <button style ="display: block; color: aliceblue; font-weight: bold; background-color: #4C4181;" class="btn btn-primary" id="botonEnviarReporte" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Reportar evento</button>
+                                                <button style ="color: aliceblue; font-weight: bold; background-color: #4C4181;" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Cancelar</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de edicion/eliminacion -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id="headerModalReporte">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div>
+                            <form action="" class="d-flex" id="formularioReporte">
+                                <div>
+                                    <ul>
+                                        <div>
+                                            <p style="color: black;" id="tipoDelReporteSinEdicion"></p>
+                                            <p style="color: transparent;" id="idDelReporteSinEdicion"></p>
+                                            <textarea name="" id="entradaDeLosDetallesEdicion" cols="53" rows="5" placeholder="Describe aquí lo sucedido en esta ubicación (opcional)"></textarea>
+                                            <br>
+                                            <br>
+                                            <p style="color: black;">¿Cuándo ocurrió?</p>
+                                            <input type="date" name="" id="fechaReporteEdicion" style="width: 100%;" required>
+                                            
+                                            <!-- <p style="color: transparent;">La ubicación elegida tiene las coordenadas: </p> -->
+                                            <span style="color: transparent;" id="coordenadasReportadas"></span>
+                                            <span style="color: transparent;" id="IDReportado"></span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button style ="display: block; color: aliceblue; font-weight: bold; background-color: #4C4181;" class="btn btn-primary"  id="botonEditarReporte" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Guardar cambios</button>
+                            <button style ="display: block; color: aliceblue; font-weight: bold; background-color: #4C4181;" class="btn btn-primary"  id="botonEliminarReporte" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Eliminar evento</button>
+                            <button style ="color: aliceblue; font-weight: bold; background-color: #4C4181;" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Cancelar</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive" style="display: flex; justify-content: space-around; border-style: dashed; color: black;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Desastre Natural</p>
+                    <img src="recursos/terremoto.png" alt="convención de desastre natural" style="width: 4%; height: 4%;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Accidente Vial</p>
+                    <img src="recursos/choque-de-autos.png" alt="convención de accidente vial" style="width: 4%; height: 4%;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Robo</p>
+                    <img src="recursos/robo.png" alt="convención de robo" style="width: 4%; height: 4%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container" id="footerCompleto">
+        <footer class="row">
+            <div class="col">
+                <p> Front End desarrollado con BootStrap, Back End desarrollado con SpringBoot, Base de Datos hecha con <br> MySQL  © 2022<br>Créditos externos: </p>
+                <a href="https://www.flaticon.es/iconos-gratis/terremoto" title="terremoto iconos">Terremoto iconos creados por Konkapp - Flaticon</a> <br>
+                <a href="https://www.flaticon.es/iconos-gratis/accidente" title="accidente iconos">Accidente iconos creados por itim2101 - Flaticon</a> <br>
+                <a href="https://www.flaticon.es/iconos-gratis/robar" title="robar iconos">Robar iconos creados por pongsakornRed - Flaticon</a>
+                <a href='https://www.freepng.es/png-50wkkp/'>Burbuja de jabón freepng.es</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.7/uuid.min.js"></script>
+    <script src="mapLogueado.js"></script>
+    <script src="registro.js"></script>
+    <script src="cerrarSesion.js"></script>
+    <script src="contactar.js"></script>
+    <script src="reportesEnBD.js"></script>
+    <script src="localidadesBogota.js"></script>
+    <script src="editar.js"></script>
+    <script src="eliminar.js"></script>
+</body>
+</html>

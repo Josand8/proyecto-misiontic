@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Expires" content="0">
+    <!-- <meta http-equiv="Last-Modified" content="0"> -->
+    <!-- <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"> -->
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <link rel="shortcut icon" href="recursos/favicon.png" type="image/x-icon">
+    <title>App Seguridad Ciudadana</title>
+</head>
+<body>
+    <a href="index">
+        <div class="container">
+            <header class="row">
+                <div class="col">
+                        <h1 style="color: white;"> &#x1f5e3;&#xfe0f; App de seguridad ciudadana</h1>
+                        <p  style="color: white;">Mapa colaborativo de reportes de seguridad en tiempo real en Bogotá</p>
+                </div>
+            </header>
+        </div>                    
+    </a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                      <!-- <a class="navbar-brand" href="#map">Mapa Colaborativo</a> -->
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="registroUsuario">¡Regístrate!</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contactarPorCorreo">Contáctanos</a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="nosotros">Sobre Nosotros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-primary" href="iniciosesion">INICIAR SESIÓN</a>
+                            </li>  
+                        </ul>
+                        <!-- <form class="d-flex">
+                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form> -->
+                      </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <!-- <div id="map" data-bs-toggle="modal" data-bs-target="#exampleModal4"></div> -->
+                <br>
+                <br>
+                <h4 style="text-align: center; color: black; padding: 10px;">Eventos de Seguridad en Tiempo Real</h4>
+                <h6 style="text-align: center; color: black; padding: 10px;">Nuestros usuarios actualizan los nuevos eventos que están ocurriendo en Bogotá</h6>
+                <br>
+                <a href="instrucciones"><button class="btn btn-primary" style="width: 100%;">¿Cómo funciona?</button></a>
+            </div>
+            <div class="col-sm-9">
+                <!-- <div id="map" data-bs-toggle="modal" data-bs-target="#exampleModal4"></div> -->
+                <div id="map" style="height: 385px;"></div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- <button type="button" class="btn btn-primary col-sm-12 fs-5 fw-bolder d-none" id="botonReportar" data-bs-toggle="modal" data-bs-target="#exampleModal4">&#x1f4cd; Presiona aquí para hacer un reporte en la ubicación seleccionada &#x1f4cd;</button> -->
+                
+                <!-- Modal Reporte en display none por defecto y controlada en map.js-->
+                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id="headerModalReporte">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" lass="d-flex" id="formularioReporte">
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <select class="form-select" id="selectorTipoReporte" aria-label="Default select example">
+                                                <option selected>Elige un tipo de reporte</option>
+                                                <option value="1">Desastre natural</option>
+                                                <option value="2">Accidente vial</option>
+                                                <option value="3">Robo</option>
+                                            </select>
+                                        </li>
+                                          <br>
+                                        <li>
+                                            <div>
+                                                <textarea name="" id="entradaDeLosDetalles" cols="53" rows="5" placeholder="Describe aquí lo sucedido en esta ubicación" required></textarea>
+                                                <br>
+                                                <p>¿Cuándo ocurrió?</p>
+                                                <input type="date" name="" id="fechaReporte" style="width: 100%;" required>
+                                                <br>
+                                                <br>
+                                                <p>La ubicación elegida tiene las coordenadas: </p>
+                                                <input type="text" name="" id="coordenadasReportadas" style="width: 100%;">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"  id="botonEnviarReporte" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Enviar mi reporte ahora</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive" style="display: flex; justify-content: space-around; border-style: dashed; color: black;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Desastre Natural</p>
+                    <img src="recursos/terremoto.png" alt="convención de desastre natural" style="width: 4%; height: 4%;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Accidente Vial</p>
+                    <img src="recursos/choque-de-autos.png" alt="convención de accidente vial" style="width: 4%; height: 4%;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">Robo</p>
+                    <img src="recursos/robo.png" alt="convención de robo" style="width: 4%; height: 4%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container" id="footerCompleto">
+        <footer class="row">
+            <div class="col">
+                <p> Front End desarrollado con BootStrap, Back End desarrollado con SpringBoot, Base de Datos hecha con <br> MySQL  © 2022<br>Créditos externos: </p>
+                <a href="https://www.flaticon.es/iconos-gratis/terremoto" title="terremoto iconos">Terremoto iconos creados por Konkapp - Flaticon</a> <br>
+                <a href="https://www.flaticon.es/iconos-gratis/accidente" title="accidente iconos">Accidente iconos creados por itim2101 - Flaticon</a> <br>
+                <a href="https://www.flaticon.es/iconos-gratis/robar" title="robar iconos">Robar iconos creados por pongsakornRed - Flaticon</a>
+                <a href='https://www.freepng.es/png-50wkkp/'>Burbuja de jabón freepng.es</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <script src="map.js"></script>
+    <script src="registro.js"></script>
+    <script src="inicioSesion.js"></script>
+    <script src="contactar.js"></script>
+    <script src="reportesEnBD.js"></script>
+    <script src="localidadesBogota.js"></script>
+</body>
+</html>

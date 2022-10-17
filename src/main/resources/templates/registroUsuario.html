@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <link rel="shortcut icon" href="recursos/favicon.png" type="image/x-icon">
+    <title>App Seguridad Ciudadana</title>
+</head>
+<body>
+    <a href="index">
+        <div class="container">
+            <header class="row">
+                <div class="col">
+                        <h1 style="color: white;"> &#x1f5e3;&#xfe0f; App de seguridad ciudadana</h1>
+                        <p  style="color: white;">Mapa colaborativo de reportes de seguridad en tiempo real en Bogotá</p>
+                </div>
+            </header>
+        </div>                    
+    </a>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                      <!-- <a class="navbar-brand" href="#map">Mapa Colaborativo</a> -->
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="registroUsuario">¡Regístrate!</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contactarPorCorreo">Contáctanos</a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="nosotros">Sobre Nosotros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-primary" href="iniciosesion">INICIAR SESIÓN</a>
+                            </li>  
+                        </ul>
+                        <!-- <form class="d-flex">
+                          <input class="for m-control me-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form> -->
+                      </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding: 5%; margin-top: 3%; border-style: solid; border-radius: 0%; border-color: black; background-color: white;">
+        <div class="row">
+            <div class="column">
+                <div class="card-body">
+                    <form th:action="@{/guardaruser}" th:object="${usuario}" method="post">
+                        <legend class="form__label" style="color: black;">Por favor registrate diligenciando los datos solicitados</legend>
+                        <div class="form-group">
+                            <label>Nombre: </label>
+                            <input type="text" name="username" field="*{username}" placeholder="Nombre del usuario" class="form-control" required style="width: 100%; margin: 5px; padding: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña: </label>
+                            <input type="password" name="password" field="*{password}" placeholder="Contraseña" class="form-control" required style="width: 100%; margin: 5px; padding: 10px;">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Id: </label>
+                            <input type="number" name="idusuario" field="*{idusuario}" placeholder="Id Usuario" class="form-control" required>
+                        </div> -->
+                        <br>
+                        <div class="box-footer">
+                            <button class="button btn btn-primary" style="width: 100%;">Registrarme ahora</button>
+                        </div>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <!-- <script src="js/llamadoInicialDatos.js"></script> -->
+    <script src="map.js"></script>
+    <!--script src="registro.js"></script -->
+    <script src="inicioSesion.js"></script>
+    <script src="contactar.js"></script>
+    <!-- <script src="js/popup.js"></script> -->
+</body>
+</html>
